@@ -76,3 +76,30 @@ for tweet in nonsarcasm_file:
     ns_neutral_words.append(neu)
     ns_tweet_polarity.append(pol)
     ns_polarity_flip.append(flip)
+
+#zip the features together
+sarcasm_features = list(zip(emoji_count, capitalized_words, user_mentions, number_hashtags, number_slang_exp,
+                      number_punctuations, pos_words, neg_words, neutral_words, tweet_polarity, polarity_flip))
+
+nonsarcasm_features = list(zip(ns_emoji_count, ns_capitalized_words, ns_user_mentions, ns_number_hashtags, ns_number_slang_exp,
+                         ns_number_punctuations, ns_pos_words, ns_neg_words, ns_neutral_words, ns_tweet_polarity, ns_polarity_flip))
+
+#read the data into a dataframe, concatenate the data and write to csv
+columns = ['Emoji', 'Capital Words', 'User Mentions', 'Hashtags', 'Slang laughter Exp', 'Punctuations', 
+          '+ve Words', '-ve words', 'neutral wors', 'Polarity', 'Polarity flip']
+final_sarcasm = pd.DataFrame(sarcasm_features, columns=columns)
+final_nonsarcasm = pd.DataFrame(nonsarcasm_features, columns=columns)
+
+label_sarcasm = [1] * final_sarcasm.shape[0]
+label_nonsarcasm = [0] * final_nonsarcasm.shape[0]
+
+final_sarcasm["label"] = label_sarcasm
+final_nonsarcasm["label"] = label_nonsarcasm
+
+dataframes = [final_sarcasm, final_nonsarcasm]
+dataset = pd.concat(dataframes, ignore_index=True)
+
+#write the data to a csv file.
+dataset.to_csv("../Data/final_dataset.csv")
+
+print("DONE!")
