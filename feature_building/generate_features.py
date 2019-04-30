@@ -60,7 +60,7 @@ ns_tweet_polarity = []
 ns_polarity_flip = []
 
 #generate features for non-sarcastic tweets
-print("Generating features for non-sarcastic tweets)
+print("Generating features for non-sarcastic tweets")
 
 for tweet in nonsarcasm_file:
     tokens = nltk.word_tokenize(tweet)
