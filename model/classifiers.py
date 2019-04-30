@@ -135,10 +135,22 @@ def neural_network(X_train, X_test, y_train, y_test):
     return accuracy, precision, recall, fscore
 
 print("Training Random Forest classifier")
-acc_rf, precision_rf, recall_rf, fscore_rf = random_forest(X_train_std, X_test_std, y_train, y_test)
+output_rf = random_forest(X_train_std, X_test_std, y_train, y_test)
 
 print("Training SVM classifier")
-acc_svm, precision_svm, recall_svm, fscore_svm = svm_classifier(X_train_std, X_test_std, y_train, y_test)
+output_svm = svm_classifier(X_train_std, X_test_std, y_train, y_test)
 
 print("Training Neural Network")
-acc_nn, precision_nn, recall_nn, fscore_nn = neural_network(X_train_std, X_test_std, y_train, y_test)
+output_nn = neural_network(X_train_std, X_test_std, y_train, y_test)
+
+#plot the output of model
+rf_output = np.asarray(list(output_rf))
+svm_output = np.asarray(list(output_svm))
+nn_output = np.asarray(list(output_nn))
+
+dataframe = pd.DataFrame(np.vstack((rf_output, svm_output, nn_output)), columns = ['Accuracy', 'Precision', 'Recall', 'Fscore'], 
+             index = ['Random Forest', 'SVM', 'Neural Network']).T
+
+dataframe.plot(kind = 'bar', figsize=(12,9))
+plt.savefig('model_eval.jpg')
+plt.show()
