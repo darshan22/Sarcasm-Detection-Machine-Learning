@@ -59,7 +59,7 @@ X_test_std = scaler.transform(X_test)
 
 #function definition for random forest classifier.
 def random_forest(X_train, X_test, y_train, y_test):
-    clf = RandomForestClassifier(random_state=0) #Create an instance of classifier
+    clf = RandomForestClassifier(n_estimators = 350,random_state=0) #Create an instance of classifier
     clf.fit(X_train, y_train) #fit the classifier to Train data
     feature_importances = clf.feature_importances_ #retrieve feature importances
     
@@ -74,9 +74,9 @@ def random_forest(X_train, X_test, y_train, y_test):
     plt.show()
     
     y_pred = clf.predict(X_test) #predict on test data
-    
     #calculate precision, recall, fscore and support
-    tp,fp,tn,fn=0,0,0,0
+    print(confusion_matrix(y_test, y_pred))
+    tp, fp, tn, fn = 0,0,0,0
     for predicted,actual in zip(y_pred,y_test):
         if(predicted==actual and predicted==1): tp+=1
         elif(predicted==actual and predicted==0):tn+=1
@@ -95,7 +95,7 @@ def svm_classifier(X_train, X_test, y_train, y_test):
     svm = SVC()
     svm.fit(X_train, y_train)
     y_pred = svm.predict(X_test_std)
-    
+    print(confusion_matrix(y_test, y_pred))
     tp,fp,tn,fn=0,0,0,0
     for predicted,actual in zip(y_pred,y_test):
         if(predicted==actual and predicted==1): tp+=1
@@ -120,6 +120,7 @@ def neural_network(X_train, X_test, y_train, y_test):
     scores = model.evaluate(X_train, y_train)
     y_pred = model.predict(X_test)
     rounded = [int(round(x[0])) for x in y_pred]
+    print(confusion_matrix(y_test, rounded))
     tp,fp,tn,fn=0,0,0,0
     for predicted,actual in zip(rounded,y_test):
         if(predicted==actual and predicted==1): tp+=1
@@ -154,3 +155,4 @@ dataframe = pd.DataFrame(np.vstack((rf_output, svm_output, nn_output)), columns 
 dataframe.plot(kind = 'bar', figsize=(12,9))
 plt.savefig('model_eval.jpg')
 plt.show()
+
