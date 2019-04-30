@@ -1,5 +1,6 @@
 """The function defined below generates the sentiment based features for a given tweet.
-It generates features such as sentiment incongruities, count of positive, neutral, and negative words, lexical polarity of the tweet, largest positive/negative sub-sequence.
+It generates features such as sentiment incongruities, count of positive, neutral, and 
+negative words, lexical polarity of the tweet, largest positive/negative sub-sequence.
 """
 
 import codecs
@@ -39,5 +40,5 @@ def sentiment_based_features(tweet):
     
     sentence_polarity = analyzer.polarity_scores(tweet)
         
-    return positive_words, negative_words, neutral_words, sentence_polarity['compound'], polarity_flip
+    return positive_words, negative_words, neutral_words, round(sentence_polarity['compound'],2), polarity_flip
     
