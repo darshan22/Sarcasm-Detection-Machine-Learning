@@ -100,6 +100,6 @@ dataframes = [final_sarcasm, final_nonsarcasm]
 dataset = pd.concat(dataframes, ignore_index=True)
 
 #write the data to a csv file.
-dataset.to_csv("../Data/final_dataset.csv")
+dataset.to_csv("../Data/final_dataset.csv", index=False)
 
 print("DONE!")
