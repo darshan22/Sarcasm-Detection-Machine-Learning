@@ -10,7 +10,7 @@ Sarcasm Detection in Tweets
 
 Authors:
 --------
-Darshan Kasat
+- Darshan Kasat
 --------------------------------------------
 
 Folders/Files Provided:
